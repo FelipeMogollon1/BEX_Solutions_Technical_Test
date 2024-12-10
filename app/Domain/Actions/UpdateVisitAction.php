@@ -11,7 +11,7 @@ class UpdateVisitAction
         $visit = Visit::find($id);
 
         if (!$visit) {
-            throw new ModelNotFoundException("Visit with ID {$id} not found.");
+            return ['error' => 'Visit not found'];
         }
 
         $visit->update([

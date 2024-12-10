@@ -28,9 +28,8 @@ class VisitController extends Controller
         $visit = Visit::find($id);
 
         if (!$visit) {
-            return response()->json(['error' => 'Visit not found'], 404);
+            return response()->json(['error' => 'Visit not found '], 404);
         }
-
         return response()->json($visit, 200);
     }
 
@@ -40,8 +39,7 @@ class VisitController extends Controller
             return response()->json(['error' => 'Bad Request'], 400);
         }
 
-        $validatedData = $request->validated();
-        $visit = $updateVisitAction->execute($id, $validatedData);
+        $visit = $updateVisitAction->execute($id, $request->validated());
 
         return response()->json($visit, 200);
     }
