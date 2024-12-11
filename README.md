@@ -1,66 +1,341 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Project Installation Guide
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Requirements
 
-## About Laravel
+Ensure your system meets the following requirements:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **PHP**: 8.2 or higher
+- **Composer**: Latest version
+- **MySQL**: 5.7 or higher
+- **Node.js**: 16 or higher with npm
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation Steps
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Clone the Repository
 
-## Learning Laravel
+```bash
+git clone https://github.com/FelipeMogollon1/BEX_Solutions_Technical_Test.git
+cd BEX_Solutions_Technical_Test
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Install Dependencies
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Run the following command to install PHP dependencies:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+composer install
+```
 
-## Laravel Sponsors
+Install JavaScript dependencies:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+npm install
+```
 
-### Premium Partners
+### 3. Set Up Environment Variables
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Copy the `.env.example` file to `.env`:
 
-## Contributing
+```bash
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Edit the `.env` file to configure your database and other environment-specific settings. Example:
 
-## Code of Conduct
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Generate Application Key
 
-## Security Vulnerabilities
+Generate the application key for your Laravel project:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan key:generate
+```
 
-## License
+### 5. Set Up the Database
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Run the migrations to create the database tables:
+
+```bash
+php artisan migrate
+```
+
+(Optional) Seed the database with sample data:
+
+```bash
+php artisan db:seed
+```
+
+### 6. Build Frontend Assets
+
+Compile the frontend assets using Vite:
+
+```bash
+npm run dev
+```
+
+For production builds, use:
+
+```bash
+npm run build
+```
+
+### 7. Start the Development Server
+
+Run the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+Access the application at `http://127.0.0.1:8000`.
+
+
+To clear caches, use:
+
+```bash
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+```
+
+## Deployment
+
+For production, follow these additional steps:
+
+1. Set `APP_ENV=production` and `APP_DEBUG=false` in `.env`.
+2. Optimize the application:
+
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+3. Use a queue worker for queued jobs.
+
+# API Documentation: Visits Endpoint
+
+## Base URL
+
+`http://127.0.0.1:8000/api/v1`
+
+---
+
+## Create a Visit
+
+**Endpoint**: `/visits`  
+**Method**: `POST`  
+**Description**: Creates a new visit record in the system.
+
+### Request Body
+
+```json
+{
+    "name": "Joe Doe",
+    "email": "Joe.Doe@example.com",
+    "latitude": 4.43889,
+    "longitude": -75.23222
+}
+```
+
+true if the visit was created successfully, false otherwise.
+```json
+{
+    "name": "Joe Doe",
+    "email": "Joe.Doe@example.com",
+    "latitude": 4.43889,
+    "longitude": -75.23222,
+    "updated_at": "2024-12-11T15:21:36.000000Z",
+    "created_at": "2024-12-11T15:21:36.000000Z",
+    "id": 14
+}
+```
+
+## Show a Visits
+
+**Endpoint**: `/visits`  
+**Method**: `GET`  
+**Description**: Shows a visit record in the system.
+
+### Request Parameters
+
+- `id`: Required, integer.
+
+### Response
+
+```json
+{
+  "id": 1,
+    "name": "Joe Doe",
+    "email": "Joe.Doe@example.com",
+  "latitude": 4.43889,
+  "longitude": -75.23222
+}
+```
+
+---
+
+## Update a Visit
+
+**Endpoint**: `/visits/{id}`  
+**Method**: `PUT`  
+**Description**: Updates a visit record in the system.
+
+### Request Parameters
+
+- `id`: Required, integer.  
+
+### Request Body
+
+```json
+{
+  "name": "Joe Doe",
+  "email": "Joe.Doe@example.com",
+  "latitude": 4.43889,
+  "longitude": -75.23222
+}
+```
+
+## Delete a Visit
+
+**Endpoint**: `/visits/{id}`  
+**Method**: `DELETE`  
+**Description**: Deletes a visit record from the system.
+
+### Request Parameters
+
+- `id`: Required, integer.
+
+### Response Body
+
+true if the visit was deleted successfully, false otherwise.
+```json
+{
+    "message": "Visit successfully deleted"
+}
+```
+```json
+{
+    "error": "Visit not found or could not be deleted"
+}
+```
+
+### Validation Rules
+
+- `name`: Required, string.
+- `email`: Required, valid email.
+- `latitude`: Required, number between -90 and 90.
+- `longitude`: Required, number between -180 and 180.
+
+---
+
+
+
+# Create Visit Command Documentation
+
+## Command Name
+
+```bash
+php artisan visits:create
+```
+
+## Description
+This command allows you to create a new visit record via the API by entering the necessary details interactively.
+
+---
+
+## How to Use
+
+1. Run the command in your terminal:
+
+   ```bash
+   php artisan visits:create
+   ```
+
+2. Provide the required details when prompted:
+
+    - **Name**: Enter the name of the visitor.
+    - **Email**: Provide a valid email address.
+    - **Latitude**: Enter the latitude coordinate (a number between -90 and 90).
+    - **Longitude**: Enter the longitude coordinate (a number between -180 and 180).
+
+3. The command will validate the inputs and send a POST request to the `http://127.0.0.1:8000/api/v1/visits` endpoint to create the visit.
+
+---
+
+## Example
+
+### Command Execution
+
+```bash
+php artisan visits:create
+```
+
+### Input Prompts
+
+```
+Enter the name of the visit: John Doe
+Enter the email of the visit: john.doe@example.com
+Enter the latitude of the visit (between -90 and 90): 40.7128
+Enter the longitude of the visit (between -180 and 180): -74.0060
+```
+
+### Expected Output
+
+- **Success**:
+  ```
+  Visit created successfully.
+  ```
+- **Failure**:
+  ```
+  Invalid email address.
+  ```
+  or
+  ```
+  Failed to create visit: {error message from API}
+  ```
+
+---
+
+## Validation
+
+The command includes validation for the following:
+
+- **Email**: Must be a valid email address format.
+- **Latitude and Longitude**: Must fall within the valid ranges (-90 to 90 for latitude and -180 to 180 for longitude).
+
+---
+
+## API Integration
+
+This command interacts with the `/api/v1/visits` endpoint using a POST request. Make sure the API server is running and accessible at `http://127.0.0.1:8000`.
+
+**Request Payload Example:**
+
+```json
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "latitude": 40.7128,
+  "longitude": -74.0060
+}
+```
+
+**Response:** The API returns a success message if the visit is created or an error message if the creation fails.
+
+---
+
+## Notes
+
+- Ensure that the `.env` file is properly configured to connect to the API endpoint.
+- Check the API endpoint documentation for further details on the `/api/v1/visits` route.
+
